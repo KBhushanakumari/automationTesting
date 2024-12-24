@@ -8,17 +8,18 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class NewTest {
 	public static WebDriver driver;
 	public static void main(String[] args) throws IOException {
-		System.out.println(readData());
+		openBrowser();
+		register();
+		closeBrowser();
 	}
-	@DataProvider(name = "exceldata")
 	public static Object[][] readData() throws IOException {
 		String path = System.getProperty("user.dir") + "//src//test//resources//RegisterData.xlsx";
 		FileInputStream inputstream = new FileInputStream(path);
@@ -27,10 +28,10 @@ public class NewTest {
 		int rows = sheet.getPhysicalNumberOfRows();
 		int columns = sheet.getRow(0).getPhysicalNumberOfCells();
 		Object data[][] = new Object[rows][columns];
-		for(int i = 0; i < rows; ++i) {
+		for(int i = 0; i < rows-1; ++i) {
 			Row row = sheet.getRow(i);
 			for(int j = 0; j < columns; ++j) {
-				data[i][j] = row.getCell(j).getStringCellValue();
+				data[i][j] = row.getCell(j);
 			}
 		}
 		workbook.close();
@@ -38,15 +39,14 @@ public class NewTest {
 		return data;
 	}
 	
-	@BeforeClass
-	public void openBrowser() {
+	public static void openBrowser() {
 		driver = new ChromeDriver();
 		driver.get("https://demo.automationtesting.in/Register.html");
 	}
 	
-	@Test
-	public void register() {
+	public static void register() throws IOException {
 		System.out.println("test");
+		/*
 		setFirstName(firstname, firstnameXpath);
 		setLastName(lastname, lastnameXpath);
 		setAddress(address, addressXpath);
@@ -67,10 +67,10 @@ public class NewTest {
 		uploadFile(filePath, choosefileXpath);
 		clickSubmit(submitXpath);
 		clickRefresh(refrestXpath);
+		*/
 	}
 	
-	@AfterClass
-	public void closeBrowser() {
+	public static void closeBrowser() {
 		driver.quit();
 	}
 }
