@@ -1,23 +1,17 @@
 package com.automationtesting.demo;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.Select;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public class Learn {
+public class Learn extends PracticeFormMethods{
 	
 	public static Object[][] readData() throws IOException {
-		String path = System.getProperty("user.dir") + "//src//test//resources//Data.xlsx";
+		String path = System.getProperty("user.dir") + "//src//test//resources//RegisterData.xlsx";
 		FileInputStream inputstream = new FileInputStream(path);
 		XSSFWorkbook workbook = new XSSFWorkbook(inputstream);
 		Sheet sheet = workbook.getSheetAt(0);
@@ -28,12 +22,22 @@ public class Learn {
 		for(int i = 1; i < rows; ++i) {
 			Row row = sheet.getRow(i);
 			for(int j = 0; j < columns; ++j) {
-				data[i-1][j] = row.getCell(j).toString();
+				Cell cell = row.getCell(j);
+				System.out.print("[" + (i-1) + "][" + j + "]");
+				if(cell != null && !cell.toString().isEmpty()) {
+					data[i-1][j] = cell.toString();
+				}
+				else {
+					data[i-1][j] = "";
+				}
+				System.out.println(data[i-1][j]);
 			}
 		}
 		workbook.close();
 		inputstream.close();
 		return data;
+//		Object[][] formData = readExcelData();
+//		return formData;
 	}
 	public static void main(String[] args) throws IOException {
 		Object[][] info = readData();
@@ -48,5 +52,11 @@ public class Learn {
 			}
 			System.out.println();
 		}
+		
+//		WebDriver driver = new ChromeDriver();
+//		String link = readProperties("url");
+//		System.out.println(link);
+//		driver = launchBrowser(link);
+//		driver.findElement(By.xpath(link));
 	}
 }
