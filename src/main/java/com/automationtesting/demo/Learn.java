@@ -2,6 +2,7 @@ package com.automationtesting.demo;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashMap;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -11,7 +12,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class Learn extends PracticeFormMethods{
 	
 	public static Object[][] readData() throws IOException {
-		String path = System.getProperty("user.dir") + "//src//test//resources//RegisterData.xlsx";
+		String path = System.getProperty("user.dir") + "//src//test//resources//Data.xlsx";
 		FileInputStream inputstream = new FileInputStream(path);
 		XSSFWorkbook workbook = new XSSFWorkbook(inputstream);
 		Sheet sheet = workbook.getSheetAt(0);
@@ -52,7 +53,7 @@ public class Learn extends PracticeFormMethods{
 			}
 			System.out.println();
 		}
-		
+
 //		WebDriver driver = new ChromeDriver();
 //		String link = readProperties("url");
 //		System.out.println(link);
