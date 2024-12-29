@@ -60,7 +60,7 @@ public class AutomatePracticeForm extends PracticeFormMethods{
 	}
 	
 	@AfterMethod
-	public void checkAssert() {
+	public void refreshPage() {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		driver.navigate().refresh();
 		js.executeScript("document.body.style.zoom='50%'");

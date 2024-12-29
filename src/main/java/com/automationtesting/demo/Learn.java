@@ -12,7 +12,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class Learn extends PracticeFormMethods{
 	
 	public static Object[][] readData() throws IOException {
-		String path = System.getProperty("user.dir") + "//src//test//resources//Data.xlsx";
+		String path = System.getProperty("user.dir") + "//src//test//resources//temp.xlsx";
 		FileInputStream inputstream = new FileInputStream(path);
 		XSSFWorkbook workbook = new XSSFWorkbook(inputstream);
 		Sheet sheet = workbook.getSheetAt(0);

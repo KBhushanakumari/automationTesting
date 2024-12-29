@@ -2,6 +2,7 @@ package com.automationtesting.demo;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Properties;
 import org.apache.poi.ss.usermodel.Cell;
@@ -109,7 +110,6 @@ public class PracticeFormMethods {
 			String[] dob = dateofbirth.split("-");
 			driver.findElement(By.xpath(dateofbirthXpath)).click();
 			driver.findElement(By.xpath(yearXpath.replace("year", dob[2]))).click();
-			//Thread.sleep(2000);
 			driver.findElement(By.xpath(monthXpath.replace("month", formatMonth(dob[1])))).click();
 			driver.findElement(By.xpath(dayXpath.replace("day", formatDay(dob[0])))).click();
 		}
@@ -181,14 +181,14 @@ public class PracticeFormMethods {
 		driver.findElement(By.xpath(submitbuttonXpath)).click();
 	}
 	
-	public static boolean passOrfail(String PositiveOrNegativecase, WebDriver driver) {
-		WebElement currentPage = driver.findElement(By.xpath("//h1[contains(text(),'Practice Form')]"));
+	public static boolean passOrfail(String PositiveOrNegativecase, WebDriver driver) throws IOException {
+		WebElement currentPage = driver.findElement(By.xpath(readProperties("practiceformXpath")));
 		if(PositiveOrNegativecase.equals("Negative")) {
 			System.out.println("negative case");
 			return currentPage.getText().equals("Practice Form");
 		}
 		if(PositiveOrNegativecase.equals("Positive")) {
-			WebElement submissionPage = driver.findElement(By.xpath("//button[contains(text(),'Close')]"));
+			WebElement submissionPage = driver.findElement(By.xpath(readProperties("closebuttonXpath")));
 			driver.findElement(By.xpath("//button[contains(text(),'Close')]")).click();
 			System.out.println("positive case");
 			return true;
@@ -204,7 +204,7 @@ public class PracticeFormMethods {
 		hash.put("Apr", "April");
 		hash.put("May", "May");
 		hash.put("Jun", "June");
-		hash.put("Jal", "July");
+		hash.put("Jul", "July");
 		hash.put("Aug", "August");
 		hash.put("Sep", "September");
 		hash.put("Oct", "October");
