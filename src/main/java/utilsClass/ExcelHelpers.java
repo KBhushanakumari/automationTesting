@@ -1,6 +1,7 @@
 package utilsClass;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -9,10 +10,22 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExcelHelpers {
-	public static Object[][] readExcelData() throws IOException{
+	public static Object[][] readExcelData() {
 		String path = System.getProperty("user.dir") + "//src//test//resources//" + JavaUtils.readProperties("registerformData");;
-		FileInputStream inputstream = new FileInputStream(path);
-		XSSFWorkbook workbook = new XSSFWorkbook(inputstream);
+		FileInputStream inputstream = null;
+		try {
+			inputstream = new FileInputStream(path);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		XSSFWorkbook workbook = null;
+		try {
+			workbook = new XSSFWorkbook(inputstream);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Sheet sheet = workbook.getSheetAt(0);
 		int rows = sheet.getPhysicalNumberOfRows();
 		int columns = sheet.getRow(0).getPhysicalNumberOfCells();
@@ -29,8 +42,14 @@ public class ExcelHelpers {
 				}
 			}
 		}
-		workbook.close();
-		inputstream.close();
+		try {
+			workbook.close();
+			inputstream.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return data;
 	}
 }

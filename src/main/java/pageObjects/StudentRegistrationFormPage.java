@@ -57,37 +57,37 @@ public class StudentRegistrationFormPage {
 	@FindBy(xpath = "//button[contains(text(),'Close')]")
 	private WebElement closeButton;
 	
-	private WebElement genderRadioButton(Object gender) throws IOException {
+	private WebElement genderRadioButton(Object gender) {
 		String xPath = JavaUtils.readProperties("genderXpath");
 		return driver.findElement(By.xpath(xPath.replace("gender", gender.toString())));
 	}
 	
-	private WebElement yearOfBirthDropdown(String year) throws IOException {
+	private WebElement yearOfBirthDropdown(String year) {
 		String yearXpath = JavaUtils.readProperties("yearXpath");
 		return driver.findElement(By.xpath(yearXpath.replace("year", year)));
 	}
 	
-	private WebElement monthOfBirthDropdown(String month) throws IOException {
+	private WebElement monthOfBirthDropdown(String month) {
 		String monthXpath = JavaUtils.readProperties("monthXpath");
 		return driver.findElement(By.xpath(monthXpath.replace("month", JavaUtils.formatMonth(month))));
 	}
 
-	private WebElement dayOfBirthDiv(String day) throws IOException {
+	private WebElement dayOfBirthDiv(String day) {
 		String dayXpath = JavaUtils.readProperties("dayXpath");
 		return driver.findElement(By.xpath(dayXpath.replace("day", JavaUtils.formatDay(day))));
 	}
 	
-	private WebElement hobbiesCheckbox(String hobby) throws IOException {
+	private WebElement hobbiesCheckbox(String hobby) {
 		String hobbiesXpath = JavaUtils.readProperties("hobbiesXpath");
 		return driver.findElement(By.xpath(hobbiesXpath.replace("hobbies", hobby)));
 	}
 	
-	private WebElement stateDropdown(String state) throws IOException {
+	private WebElement stateDropdown(String state) {
 		String stateXpath = JavaUtils.readProperties("stateXpath");
 		return driver.findElement(By.xpath(stateXpath.replace("Select State", state)));
 	}
 	
-	private WebElement cityDropdown(String city) throws IOException {
+	private WebElement cityDropdown(String city) {
 		String cityXpath = JavaUtils.readProperties("cityXpath");
 		return driver.findElement(By.xpath(cityXpath.replace("Select City", city)));
 	}
@@ -109,7 +109,7 @@ public class StudentRegistrationFormPage {
 		SeleniumHelpers.sendData(emailField, email.toString());
 	}
 	
-	public void setGender(Object gender) throws IOException {
+	public void setGender(Object gender) {
 		SeleniumHelpers.click(genderRadioButton(gender));
 	}
 	
@@ -117,7 +117,7 @@ public class StudentRegistrationFormPage {
 		SeleniumHelpers.sendData(mobileField, mobile.toString());
 	}
 	
-	public void setDateOfBirth(String dateofbirth) throws IOException {
+	public void setDateOfBirth(String dateofbirth) {
 		//dd-mm-yyyy
 		if(!dateofbirth.isEmpty()) {
 			SeleniumHelpers.click(dateOfBirthField);
@@ -138,7 +138,7 @@ public class StudentRegistrationFormPage {
 		}
 	}
 	
-	public void setHobbies(Object hobbies) throws IOException {
+	public void setHobbies(Object hobbies) {
 		if(hobbies.toString() != "") {
 			if(hobbies.toString().contains("Music")) {
 				SeleniumHelpers.click(hobbiesCheckbox("Music"));
@@ -152,20 +152,20 @@ public class StudentRegistrationFormPage {
 		}
 	}
 	
-	public void chooseFile(String filepath) throws IOException {
+	public void chooseFile(String filepath) {
 		SeleniumHelpers.sendData(chooseFilebutton, filepath);
 	}
 	
-	public void setCurrentAddress(Object address) throws IOException {
+	public void setCurrentAddress(Object address) {
 		SeleniumHelpers.sendData(addressField, address.toString());
 	}
 	
-	public void SetState(String state) throws InterruptedException, IOException {
+	public void SetState(String state) {
 		SeleniumHelpers.click(selectstateField);
 		SeleniumHelpers.click(stateDropdown(state));
 	}
 	
-	public void SetCity(String city, String state) throws IOException {
+	public void SetCity(String city, String state) {
 		if(!state.isEmpty()) {
 				SeleniumHelpers.click(selectcityField);
 				SeleniumHelpers.click(cityDropdown(city));
@@ -176,13 +176,13 @@ public class StudentRegistrationFormPage {
 		SeleniumHelpers.click(submitButton);
 	}
 	
-	public boolean passOrfail(String PositiveOrNegativecase) throws IOException, InterruptedException {
+	public boolean passOrfail(String PositiveOrNegativecase) {
 		if(PositiveOrNegativecase.equals("Negative")) {
 			System.out.println("negative case");
 			return practiceFormHeading.getText().equals("Practice Form");
 		}
 		if(PositiveOrNegativecase.equals("Positive")) {
-			Thread.sleep(1000);
+			SeleniumHelpers.waitToClick(driver, closeButton);
 			SeleniumHelpers.click(closeButton);
 			System.out.println("positive case");
 			return true;
@@ -191,8 +191,8 @@ public class StudentRegistrationFormPage {
 	}
 	
 	public void register(Object firstname, Object lastname, Object email, Object gender, Object mobile,
-			Object dateofBirth, Object subjects, Object hobbies, Object file, Object address, Object state, Object city, String PositiveOrNegativecase) throws IOException, InterruptedException {
-		Thread.sleep(2000);
+			Object dateofBirth, Object subjects, Object hobbies, Object file, Object address, Object state, Object city, String PositiveOrNegativecase) {
+		SeleniumHelpers.waitToLocateElement(driver, firstNameField);
 		setFirstname(firstname);
 		setLastname(lastname);
 		setUserEmail(email);

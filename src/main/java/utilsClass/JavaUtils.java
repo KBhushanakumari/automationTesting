@@ -1,16 +1,20 @@
 package utilsClass;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Properties;
 
 public class JavaUtils {
-	public static String readProperties(String property) throws IOException {
+	public static String readProperties(String property) {
 		Properties propertyFile = new Properties();
 		String path = System.getProperty("user.dir") + "//src//test//resources//browser.properties";
-		FileInputStream inputStream = new FileInputStream(path);
-		propertyFile.load(inputStream);
+		try {
+			FileInputStream inputStream = new FileInputStream(path);
+			propertyFile.load(inputStream);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 		return propertyFile.getProperty(property);
 	}
 	

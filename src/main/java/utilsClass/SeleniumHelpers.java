@@ -1,15 +1,17 @@
 package utilsClass;
 
-import java.io.IOException;
+import java.time.Duration;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SeleniumHelpers {
-	public static WebDriver launchBrowser() throws IOException {
+	public static WebDriver launchBrowser() {
 		WebDriver driver;
 		String browser = JavaUtils.readProperties("browser");
 		switch(browser) {
@@ -44,12 +46,22 @@ public class SeleniumHelpers {
 			element.clear();
 			element.sendKeys(data);
 		}
-//		else {
-//			System.out.println("Cannot send data to webelement!!!");
-//		}
+		else {
+			System.out.println("Cannot send data to webelement!!!");
+		}
 	}
 
 	public static void sendData(WebElement subjectsField, Keys enter) {
 		subjectsField.sendKeys(enter);
+	}
+	
+	public static void waitToClick(WebDriver driver, WebElement element) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+		wait.until(ExpectedConditions.elementToBeClickable(element));
+	}
+	
+	public static void waitToLocateElement(WebDriver driver, WebElement element) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+		wait.until(ExpectedConditions.visibilityOf(element));
 	}
 }

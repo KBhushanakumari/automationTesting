@@ -6,7 +6,7 @@
       <class name="executionClasses.TestStudentRegistration">
         <methods>
           <include name="closeBrowser"/>
-          <include name="studentRegistration" invocation-numbers="199"/>
+          <include name="studentRegistration" invocation-numbers="8 25 26 29 37 38 41 51 52 81 85 104 105 114 115 124 125 134 135 144 145 154 155 164 165 174 175 184 185 194 195 199"/>
           <include name="openBrowser"/>
           <include name="refreshPage"/>
         </methods>
